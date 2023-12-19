@@ -11,7 +11,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 
 2. Requests and Response
    - request オブジェクト・Response オブジェクトはそれぞれ非常に万能
-   - status_code を明示的に記載することで意図しないリクエストハンドリングを防ぐ
+   - status_code を明示的に記載することで意図しないステータスハンドリングを防ぐ
    - api_view デコレータを利用するためには、JsonResponse ではなく、Response を利用する。
 
 ## 不具合
