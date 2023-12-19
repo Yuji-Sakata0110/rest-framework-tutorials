@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group, User
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 from rest_framework import permissions, viewsets
 from rest_framework.parsers import JSONParser
 from myapp.serializers import GroupSerializer, UserSerializer
@@ -31,8 +31,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 # tutorial 1 serializer
-@csrf_exempt
-def snippet_list(request) -> JsonResponse | None:
+@api_view(["GET", "POST"])
+def snippet_list(request, format=None) -> JsonResponse | None:
     """
     List all code snippets, or create a new snippet.
     """
@@ -50,8 +50,8 @@ def snippet_list(request) -> JsonResponse | None:
         return JsonResponse(serializer.errors, status=400)
 
 
-@csrf_exempt
-def snippet_detail(request, pk) -> HttpResponse | JsonResponse | None:
+@api_view(["GET", "PUT", "DELETE"])
+def snippet_detail(request, pk, format=None) -> HttpResponse | JsonResponse | None:
     """
     Retrieve, update or delete a code snippet.
     """
