@@ -20,5 +20,5 @@ from django.urls import path, include
 urlpatterns: list = [
     path("admin/", admin.site.urls),
     # myapp側のurl設定を利用できるようにする。
-    path("myapp/", include("myapp.urls")),
+    path("", include("myapp.urls")),
 ]
