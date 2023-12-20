@@ -6,6 +6,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 
 1. Serialization
 2. Requests and Response
+3. Class-based Views
 
 ## tips
 
@@ -13,7 +14,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
    - request オブジェクト・Response オブジェクトはそれぞれ非常に万能。
    - status_code を明示的に記載することで意図しないステータスハンドリングを防ぐ。
    - api_view デコレータを利用するためには、JsonResponse ではなく、Response を利用する。
-3. class-based views
+3. Class-based Views
    - 関数ベースの api_view よりもクラスベース api_view の方がコードを DRY に保つことができ、再利用性が高い。
    - 用途に応じて API_ViewClass を継承する。
      - generics.ListCreateAPIView
