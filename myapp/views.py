@@ -1,5 +1,5 @@
-from rest_framework import generics, permissions, renderers
-from rest_framework.decorators import api_view
+from rest_framework import generics, permissions, renderers, viewsets
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
@@ -20,48 +20,35 @@ def api_root(request, format=None) -> Response:
     )
 
 
-# tutorial3 class-based-view
-class SnippetList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class SnippetViewSet(viewsets.ModelViewSet):
+    """
+    This ViewSet automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    Additionally we also provide an extra `highlight` action.
+    """
+
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes: list = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+    ]
 
-    # tutorial4 追加 元のcreateメソッドをオーバーライド
-    # 作成したスニペットのOwnerにリクエストしたユーザーを登録する。
-    def perform_create(self, serializer) -> None:
-        serializer.save(owner=self.request.user)
-
-
-# tutorial3 class-based-view
-class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
-    # コードスニペットを作成したユーザーのみに更新・削除権限を与える。
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-
-    # tutorial4 追加 元のcreateメソッドをオーバーライド
-    # 作成したスニペットのOwnerにリクエストしたユーザーを登録する。
-    def perform_create(self, serializer) -> None:
-        serializer.save(owner=self.request.user)
-
-
-class UserList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-# tutorial5 追加
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
+    # 標準の create/update/delete スタイルに適合しないカスタム エンドポイントを追加。デフォルトでGETリクエストに対応。
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs) -> Response:
         snippet = self.get_object()
         return Response(snippet.highlighted)
+
+    def perform_create(self, serializer) -> None:
+        serializer.save(owner=self.request.user)
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

@@ -9,6 +9,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 3. Class-based Views
 4. Authentication & Permissions
 5. Relationships & Hyperlinked APIs
+6. ViewSets & Routers
 
 ## tips
 
@@ -33,6 +34,10 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 5. Relationships & Hyperlinked APIs
    - エントリーポイントを作成する。
    - ハイパーリンクを作成し、users, snippets へのリンクをルート api_view に作成する。
+6. ViewSets & Routers
+   - ViewSet を利用することで、API の状態とモデリングとの対話に集中するために、記述するコードを最小限にすることができる。
+   - ただし、明示的な構築方法ではないため、用途に注意する。用途に合わない場合は、他の View クラスを利用する。
+   - ReadOnlyModelViewSet クラスはデフォルトで読み取り専用クラスを自動的に提供する。
 
 ## 不具合
 

@@ -12,7 +12,7 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Snippet
-        fields = [
+        fields: list[str] = [
             "url",
             "id",
             "highlight",
