@@ -1,9 +1,23 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, renderers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from myapp.models import Snippet
 from myapp.serializers import SnippetSerializer
 from myapp.serializers import UserSerializer
 from myapp.permissions import IsOwnerOrReadOnly
+
+
+# tutorial5 エントリーポイント作成
+@api_view(["GET"])
+def api_root(request, format=None) -> Response:
+    return Response(
+        {
+            "users": reverse("user-list", request=request, format=format),
+            "snippets": reverse("snippet-list", request=request, format=format),
+        }
+    )
 
 
 # tutorial3 class-based-view
@@ -41,3 +55,13 @@ class UserDetail(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+# tutorial5 追加
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_classes = [renderers.StaticHTMLRenderer]
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)

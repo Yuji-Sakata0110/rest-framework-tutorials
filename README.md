@@ -8,6 +8,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 2. Requests and Response
 3. Class-based Views
 4. Authentication & Permissions
+5. Relationships & Hyperlinked APIs
 
 ## tips
 
@@ -29,6 +30,9 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
    - 認証済みのユーザーだけがアクセスできるようにできる。
    - 未認証のユーザーには読み取りのみの機能を与えることができる。
    - コンテンツを作成したオーナーユーザーにのみ更新・削除イベントの権限を付与することができる。
+5. Relationships & Hyperlinked APIs
+   - エントリーポイントを作成する。
+   - ハイパーリンクを作成し、users, snippets へのリンクをルート api_view に作成する。
 
 ## 不具合
 
