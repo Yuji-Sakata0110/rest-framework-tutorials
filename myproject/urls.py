@@ -22,3 +22,7 @@ urlpatterns: list = [
     # myapp側のurl設定を利用できるようにする。
     path("", include("myapp.urls")),
 ]
+
+urlpatterns += [
+    path("api-auth/", include("rest_framework.urls")),
+]

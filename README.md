@@ -7,6 +7,7 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
 1. Serialization
 2. Requests and Response
 3. Class-based Views
+4. Authentication & Permissions
 
 ## tips
 
@@ -24,6 +25,10 @@ rest-framework-tutorials を実践し、学習したことを記述していく�
    - DRY : 重複を防ぐ考え方が含まれている。
      - 情報の重複は変更を困難にし、透明性の減少させる。
      - [DRY（wiki）](https://ja.wikipedia.org/wiki/Don%27t_repeat_yourself)
+4. Authentication & Permissions
+   - 認証済みのユーザーだけがアクセスできるようにできる。
+   - 未認証のユーザーには読み取りのみの機能を与えることができる。
+   - コンテンツを作成したオーナーユーザーにのみ更新・削除イベントの権限を付与することができる。
 
 ## 不具合
 
